@@ -51,7 +51,7 @@
                     <input type='password' name='password' id='password' maxlength="50" />
                     <div id='register_password_errorloc' class='error' style='clear:both'></div>
                 </div>
-                <?php if (!array_key_exists('versionCorta',$_GET)||array_key_exists('versionCorta',$_GET) && !$_GET['versionCorta']): ?>
+                <?php if (!$_GET['versionCorta']): ?>
                   <div class='container' style='height:80px;'>
                       <label for='password' >Confirmar Contaseña*:</label><br/>
                       <div class='pwdwidgetdiv' id='thepwddiv' ></div>
