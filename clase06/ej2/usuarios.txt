@@ -1,0 +1,1 @@
+{"usuarios":{"nombre":"a","usuario":"a","email":"a","pais":"Argentina","password":"$2y$10$YNx4oc\/exix7D9w5pdrq4uW6EXiwAmlNNSFv9WSB5FXSWJDYXVraK"}}{"usuarios":{"nombre":"ab","usuario":"b","email":"b@a.a","pais":"Brasil","password":"$2y$10$l2SqH6jHiDfOvjQF5YDUfe1j312k3tezr7waT0uXsGU16B7\/T9qcu"}}

@@ -1,5 +1,12 @@
 <?PHP
   $paises = ['Argentina', "Peru", "Uruguay", "Brasil"];
+  $nombre= array_key_exists('name',$_POST)&& $_POST['name']?$_POST['name']:null;
+  $email= array_key_exists('email',$_POST)&& $_POST['email']?$_POST['email']:null;
+  $username=array_key_exists('username',$_POST)&&$_POST['username']?$_POST['username']:null;
+  $pais=array_key_exists('pais',$_POST)&&$_POST['pais']?$_POST['pais']:'Seleccione';
+  $submitted=array_key_exists('submitted',$_POST)&&$_POST['submitted']?$_POST['submitted']:null;
+  $password=array_key_exists('password',$_POST)&&$_POST['password']? $_POST['password']:null;
+  $confPassword=array_key_exists('confPass',$_POST)&&$_POST['confPass']? $_POST['confPass']:null;
 ?>
 <!DOCTYPE html>
 <html>
@@ -13,60 +20,108 @@
         <form id='register' action='' method='post'>
             <fieldset >
                 <legend>Registrate</legend>
-
                 <input type='hidden' name='submitted' id='submitted' value='1'/>
-
                 <div class='short_explanation'>* campos requeridos</div>
-                <input type='text' class='spmhidip' name='' />
-
-                <div><span class='error'></span></div>
                 <div class='container'>
                     <label for='name' >Nombre completo: </label><br/>
-                    <input type='text' name='name' id='name' value='' maxlength="50" /><br/>
-                    <span id='register_name_errorloc' class='error'></span>
+                    <input type='text' name='name' id='name' value='<?= $nombre?>' maxlength="50" /><br/>
+                    <?php if ($submitted&&!$nombre): ?>
+                      <span id='register_name_errorloc' class='error'>* Error, ingrese</span>
+                    <?php endif; ?>
                 </div>
                 <div class='container'>
                     <label for='email' >Email:</label><br/>
-                    <input type='text' name='email' id='email' value='' maxlength="50" /><br/>
-                    <span id='register_email_errorloc' class='error'></span>
+                    <input type='text' name='email' id='email' value='<?= $email?>' maxlength="50" /><br/>
+                    <?php if ($submitted&&!$email): ?>
+                      <span id='register_email_errorloc' class='error'>* Error, ingrese</span>
+                    <?php endif; ?>
                 </div>
                 <div class='container'>
                     <label for='username' >Nombre de usuario*:</label><br/>
-                    <input type='text' name='username' id='username' value='' maxlength="50" /><br/>
-                    <span id='register_username_errorloc' class='error'></span>
+                    <input type='text' name='username' id='username' value='<?= $username?>' maxlength="50" /><br/>
+
+                    <?php if ($submitted&&!$username): ?>
+                      <span id='register_username_errorloc' class='error'>* Error, ingrese</span>
+                    <?php endif; ?>
                 </div>
                 <div class='container'>
                     <label for='username' >pais*:</label><br/>
                     <div class='pwdwidgetdivpais' id='thepwddivpais' ></div>
                     <select  name="pais">
-                      <?php foreach ($paises as $key => $pais): ?>
-                        <option value="<?= $pais?>"><?= $pais?></option>
+                      <option selected value="<?= $pais ?>"><?= $pais ?></option>
+                      <?php foreach ($paises as $key => $value): ?>
+                        <option value="<?= $value?>"><?= $value?></option>
                       <?php endforeach; ?>
                     </select>
-                    <span id='register_username_errorloc' class='error'></span>
+                    <?php if ($submitted&&$pais=='Seleccione'): ?>
+                      <span id='register_username_errorloc' class='error'>Seleccione</span>
+                    <?php endif; ?>
                 </div>
                 <div class='container' style='height:80px;'>
                     <label for='password' >Contaseña*:</label><br/>
                     <div class='pwdwidgetdiv' id='thepwddiv' ></div>
                     <input type='password' name='password' id='password' maxlength="50" />
-                    <div id='register_password_errorloc' class='error' style='clear:both'></div>
+                    <?php if ($submitted&&!$password): ?>
+                      <div id='register_password_errorloc' class='error' style='clear:both'>Ingrese contraseña</div>
+                    <?php endif; ?>
                 </div>
-                <?php if (!$_GET['versionCorta']): ?>
+
+                <?php if( !array_key_exists('versionCorta', $_GET) || array_key_exists('versionCorta', $_GET) &&  !$_GET['versionCorta']): ?>
                   <div class='container' style='height:80px;'>
-                      <label for='password' >Confirmar Contaseña*:</label><br/>
-                      <div class='pwdwidgetdiv' id='thepwddiv' ></div>
-                      <input type='password' name='password' id='password' maxlength="50" />
-                      <div id='register_password_errorloc' class='error' style='clear:both'></div>
+                    <label for='password' >Confirmar Contraseña*:</label><br/>
+                    <div class='pwdwidgetdiv' id='thepwddiv' ></div>
+                    <input type='password' name='confPass' id='confpass' maxlength="50" />
+                    <?php if ($submitted&&!$confPassword): ?>
+                      <div id='register_password_errorloc' class='error' style='clear:both'>Confirme contraseña</div>
+                    <?php endif; ?>
+                    <?php if ($password!==$confPassword): ?>
+                      <div id='register_password_errorloc' class='error' style='clear:both'>No coincide con la original</div>
+                    <?php endif; ?>
                   </div>
                 <?php endif; ?>
 
 
                 <div class='container'>
-                    <input type='submit' name='Submit' value='Enviar' />
-                </div>
-
+                  <input type='submit' name='Submit' value='Enviar' />
+              </div>
             </fieldset>
-        </form>
-
-    </body>
+      </form>
+  </body>
 </html>
+<?php
+  if (!is_null($nombre)&&!is_null($username)&&!is_null($email)&&
+    !is_null($password)&&$password==$confPassword&&$pais!=='Seleccione') {
+      $nombreFichero="usuarios.txt";
+      $fp=fopen('usuarios.txt','r');
+      $tamanio=filesize($nombreFichero);
+      $contenido=fread($fp,$tamanio);
+      fclose($fp);
+      $usuarios=json_decode($contenido,true);
+        var_dump($archivo);
+
+      $usuario=[
+          'nombre' => $nombre,
+          'usuario'=>$username,
+          'email'=>$email,
+          'pais'=>$pais,
+          'password'=>password_hash($password,PASSWORD_DEFAULT)
+      ];
+      $usuarios['usuarios']=$usuario;
+      $userJason=json_encode($usuarios);
+      $fp=fopen('usuarios.txt','a');
+      fwrite($fp,$userJason);
+      fclose($fp);
+      // header('Location:http://www.google.com/');
+  }
+
+
+  var_dump($_POST);
+  echo "$password";
+  echo "$confPassword";
+  echo "<br>";
+    echo "<br>";  echo "<br>";
+  var_dump($usuarios);
+  echo "<br>";
+    echo "<br>";  echo "<br>";
+  var_dump($userJason);
+ ?>
