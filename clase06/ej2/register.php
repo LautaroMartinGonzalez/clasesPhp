@@ -106,7 +106,7 @@
           'pais'=>$pais,
           'password'=>password_hash($password,PASSWORD_DEFAULT)
       ];
-      $usuarios['usuarios']=$usuario;
+      $usuarios[]=$usuario;
       $userJason=json_encode($usuarios);
       $fp=fopen('usuarios.txt','a');
       fwrite($fp,$userJason);
