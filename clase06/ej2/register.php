@@ -96,8 +96,7 @@
       $tamanio=filesize($nombreFichero);
       $contenido=fread($fp,$tamanio);
       fclose($fp);
-      $usuarios=json_decode($contenido,true);
-        var_dump($archivo);
+      $archivo=json_decode($contenido,true);
 
       $usuario=[
           'nombre' => $nombre,
@@ -106,22 +105,13 @@
           'pais'=>$pais,
           'password'=>password_hash($password,PASSWORD_DEFAULT)
       ];
-      $usuarios[]=$usuario;
-      $userJason=json_encode($usuarios);
-      $fp=fopen('usuarios.txt','a');
+      $archivo["usuarios"][]=$usuario;
+      $userJason=json_encode($archivo);
+      $fp=fopen('usuarios.txt','w');
       fwrite($fp,$userJason);
       fclose($fp);
-      // header('Location:http://www.google.com/');
+      header('Location:http://www.google.com/');
   }
 
 
-  var_dump($_POST);
-  echo "$password";
-  echo "$confPassword";
-  echo "<br>";
-    echo "<br>";  echo "<br>";
-  var_dump($usuarios);
-  echo "<br>";
-    echo "<br>";  echo "<br>";
-  var_dump($userJason);
  ?>
