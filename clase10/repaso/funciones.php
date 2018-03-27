@@ -31,7 +31,7 @@
 		$proximoId = 0;
 
 		foreach ($usuarios['usuarios'] as $indice => $usuario) {
-			if ($usuario['$campo'] == $valor) {
+			if ($usuario[$campo] == $valor) {
 				$existe = true;
 				$posicion = $indice;
 				$usuarioEncontrado = $usuario;
@@ -73,6 +73,19 @@
 			return $urlFinalConNombreYExtension;
 		}
 	}
+	function esUsuarioUnico($email,$id){
+		$aux=true;
+		$usuarios = json_decode(file_get_contents('usuarios.json'),true);
+		if (is_null($usuarios)) {
+			$usuarios = ['usuarios' => []];
+		}
+		foreach ($usuarios['usuario'] as $posicion => $usuario) {
+			if ($usuario['email']==$email&&$usuario['id']!=$id) {
+				return $aux=false;
+			}
+		}
+		return $aux;
+	}
 
 	function guardarUsuario($usuario) {
 		$usuarios = json_decode(file_get_contents('usuarios.json'),true);
@@ -81,6 +94,16 @@
 		}
 
 		$usuarios['usuarios'][] = $usuario;
+
+		file_put_contents('usuarios.json', json_encode($usuarios,JSON_PRETTY_PRINT));
+	}
+	function modificarUsuario($usuario, $posicion) {
+		$usuarios = json_decode(file_get_contents('usuarios.json'),true);
+		if (is_null($usuarios)) {
+			$usuarios = ['usuarios' => []];
+		}
+
+		$usuarios['usuarios'][$posicion] = $usuario;
 
 		file_put_contents('usuarios.json', json_encode($usuarios,JSON_PRETTY_PRINT));
 	}

@@ -1,18 +1,11 @@
 {
     "usuarios": [
         {
-            "nombre": "gaston",
-            "email": "gaston.elordi@gmail.com",
-            "password": "$2y$10$htQT54OpDV4UEIYULm9ihexSNtCacL08sjKRHYvNzpMnMdYYsUGKy",
+            "nombre": "Lautaro Gonzalez",
+            "email": "lautaromg84@gmail.com",
+            "password": "$2y$10$e2u7IbNpzfsykK4IVVdKr.zVIdl6MuTzhFaGLp4fUWCsga9.jMe5y",
             "id": 1,
-            "imagen": ".\/archivos\/imagen_1522108684.png"
-        },
-        {
-            "nombre": "Lautaro",
-            "email": "a@a.com",
-            "password": "$2y$10$OFZARp8rcb6dyO0ozR\/KI.8VJePFICqH2jCdxLizFHWzm\/MFklXIO",
-            "id": 2,
-            "imagen": ".\/archivos\/imagen_1522111435.png"
+            "imagen": ".\/archivos\/imagen_1522173475.jpg"
         }
     ]
 }
