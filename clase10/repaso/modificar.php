@@ -23,15 +23,21 @@
 			if (password_verify($password,$usuario['password'])) {
 				$infoUsuario=dameInfoUsuarioPorCampo('id',$usuario['id']);
 				if ($infoUsuario['existe']) {
-					$usuarioModificado=[
-							'nombre'=>$nombre,
-							'email'=>$email,
-							'password'=>password_hash($password,PASSWORD_DEFAULT),
-							'id'=>$_SESSION['usuario']['id'],
-							'imagen'=>guardarArchivoSubido('imagen')
-					];
-					modificarUsuario($usuarioModificado,$infoUsuario['posicion']);//guardar en json
-					$_SESSION['usuario']=$usuarioModificado;//guardar en sesión
+					if (esUsuarioUnico($email,$_SESSION['usuario']['id'])) {
+						$usuarioModificado=[
+								'nombre'=>$nombre,
+								'email'=>$email,
+								'password'=>password_hash($password,PASSWORD_DEFAULT),
+								'id'=>$_SESSION['usuario']['id'],
+								'imagen'=>guardarArchivoSubido('imagen')
+						];
+						modificarUsuario($usuarioModificado,$infoUsuario['posicion']);//guardar en json
+						$_SESSION['usuario']=$usuarioModificado;//guardar en sesión
+					}else {
+						$error=true;
+						$errorMailExiste=true;
+					}
+
 				}else {
 					$error=true;
 				}
@@ -59,6 +65,12 @@
 		<?php if($error && array_key_exists('existe', $infoUsuario) && !$infoUsuario['existe']): ?>
 			<p>
 				<span>Error: el usuario no existe en la base de datos</span>
+			</p>
+
+		<?php endif; ?>
+		<?php if($error && $errorMailExiste): ?>
+			<p>
+				<span>Error: el usuario/mail ya existe en la base de datos</span>
 			</p>
 
 		<?php endif; ?>

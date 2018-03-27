@@ -79,7 +79,7 @@
 		if (is_null($usuarios)) {
 			$usuarios = ['usuarios' => []];
 		}
-		foreach ($usuarios['usuario'] as $posicion => $usuario) {
+		foreach ($usuarios['usuarios'] as $indice => $usuario) {
 			if ($usuario['email']==$email&&$usuario['id']!=$id) {
 				return $aux=false;
 			}

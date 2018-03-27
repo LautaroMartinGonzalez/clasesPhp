@@ -3,9 +3,16 @@
         {
             "nombre": "Lautaro Gonzalez",
             "email": "lautaromg84@gmail.com",
-            "password": "$2y$10$e2u7IbNpzfsykK4IVVdKr.zVIdl6MuTzhFaGLp4fUWCsga9.jMe5y",
+            "password": "$2y$10$jJtGescPTOYj49mXV8VfSOwJWmWwYi65h.t8Qyrv9n3YicV7XYOWW",
             "id": 1,
-            "imagen": ".\/archivos\/imagen_1522173475.jpg"
+            "imagen": ".\/archivos\/imagen_1522189141.png"
+        },
+        {
+            "nombre": "b",
+            "email": "b@b.com",
+            "password": "$2y$10$sqlFKK6HW6yLUrTvakIRD.Ig7\/RdKdijUGBlsA5pa\/vILRiTUdFfy",
+            "id": 2,
+            "imagen": ".\/archivos\/imagen_1522189172.png"
         }
     ]
 }
